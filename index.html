@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | IT Student</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Styles & Smooth Scrolling */
+        :root {
+            --bg-main: #0f172a;        
+            --bg-card: #1e293b;        
+            --border-color: #334155;   
+            --text-main: #f8fafc;      
+            --text-muted: #94a3b8;     
+            --accent: #3b82f6;         
+            --accent-hover: #2563eb;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Outfit', system-ui, -apple-system, sans-serif; /* Upgraded Font */
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            padding-top: 80px; /* Buffer for sticky nav */
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Entrance Animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        section, .hero-section {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        /* Sticky Glassmorphism Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: flex-end;
+            box-sizing: border-box;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+            z-index: 1000;
+        }
+
+        nav .nav-container {
+            max-width: 1400px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 2.5rem;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover { color: var(--text-main); }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 3rem 5% 2rem 5%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-card {
+            background: linear-gradient(145deg, var(--bg-card), #0f172a);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+            padding-right: 2rem;
+        }
+
+        .image-wrapper {
+            flex: 0 0 380px; 
+            height: 100%;
+            position: relative;
+        }
+
+        .profile-img {
+            position: absolute;
+            top: -40px;
+            left: 40px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--border-color); 
+            border: 4px solid var(--bg-card);
+            /* Added accent glow */
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.03) translateY(-5px);
+        }
+
+        .hero-content {
+            flex: 1;
+            padding: 3rem 0 3rem 1rem;
+        }
+
+        .hero-content h1 {
+            background: linear-gradient(to right, #f8fafc, #94a3b8);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            padding-bottom: 0.15em; 
+            margin: 0 0 0.5rem 0; 
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin: 0;
+            max-width: 535px; 
+            line-height: 1.7;
+            text-align: justify; 
+        }
+
+        /* Main Content Adjustments */
+        section { margin: 6rem auto; scroll-margin-top: 100px; }
+        
+        h2 { 
+            color: var(--text-main); 
+            font-size: 2.2rem; 
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: inline-block;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Interactive Cards (Education & Contact) */
+        .card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 15px rgba(59, 130, 246, 0.05);
+        }
+        
+        .card h3 { color: var(--text-main); margin-top: 0; font-size: 1.5rem; font-weight: 600; }
+        .card p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 0; }
+
+        /* --- PROJECT GRID & CARDS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            position: relative; 
+        }
+
+        .project-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3), 0 0 20px rgba(59, 130, 246, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .project-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--border-color);
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.02);
+        }
+
+        .project-content {
+            padding: 2rem;
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card); /* Covers scaled image overflow */
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-content h3 { color: var(--text-main); margin-top: 0; font-size: 1.6rem; font-weight: 600;}
+        .project-content p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin: 0.5rem 0 1.5rem 0; flex: 1; }
+
+        .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end; 
+            margin-top: auto; 
+        }
+
+        .repo-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: all 0.2s;
+            padding: 0.5rem 0; 
+        }
+
+        .repo-link:hover {
+            color: #60a5fa;
+            transform: translateX(3px);
+        }
+
+        /* --- EDUCATION TIMELINE STYLES --- */
+        .edu-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            padding-left: 1rem;
+        }
+
+        .edu-item {
+            position: relative;
+            padding-left: 2.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--bg-card), 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-header h3 {
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .year-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent);
+            padding: 0.25rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .school-name {
+            color: #60a5fa !important;
+            font-weight: 500;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        /* Tags */
+        .tags { margin-top: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tags span {
+            background: rgba(59, 130, 246, 0.05);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
+        }
+        
+        .tags span:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Enhanced Contact Section */
+        .contact-links { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;}
+        .contact-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--text-muted);
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        footer { text-align: center; padding: 2.5rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 4rem;}
+
+        /* --- RESPONSIVE FIXES --- */
+        @media (max-width: 1024px) {
+            .image-wrapper { flex: 0 0 320px; }
+            .profile-img { width: 280px; height: 280px; left: 30px; }
+            .hero-content h1 { font-size: 3rem; }
+            .projects-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+
+        @media (max-width: 850px) {
+            body { padding-top: 120px; } /* More room for wrapping nav */
+            nav { padding: 1rem 5%; justify-content: center; }
+            nav .nav-container { justify-content: center; flex-wrap: wrap; gap: 1rem; }
+            nav a { margin: 0; font-size: 0.95rem; }
+            
+            .hero-section { padding-top: 2rem; }
+            .hero-card { 
+                flex-direction: column; 
+                padding: 0 1.5rem 3rem 1.5rem; 
+                text-align: center;
+                height: auto; 
+            }
+            .image-wrapper { flex: none; width: 100%; height: 110px; position: relative; }
+            .profile-img { 
+                top: -80px; 
+                left: 50%; 
+                transform: translateX(-50%); 
+                width: 180px; 
+                height: 180px; 
+            }
+            .hero-content { padding: 0; flex: none; width: 100%; box-sizing: border-box; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content p { 
+                margin: 0 auto; 
+                font-size: 1.05rem; 
+                text-align: center; 
+            }
+            
+            section { margin: 4rem auto; scroll-margin-top: 140px; }
+            .card, .project-content { padding: 1.5rem; }
+            
+            .contact-links { flex-direction: column; }
+            .contact-btn { width: 100%; box-sizing: border-box; }
+        }
+
+        /* --- CONTACT FORM STYLES --- */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            background: #0f172a; /* Darker inset background */
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 850px) {
+            .form-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#about">Profile</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="hero-section" id="about">
+        <div class="hero-card">
+            <div class="image-wrapper">
+                <img src="https://via.placeholder.com/320x320.png?text=Profile+Image" alt="Profile" class="profile-img">
+            </div>
+            
+            <div class="hero-content">
+                <h1>Kim Cyril M. Torregoza</h1>
+                <p>Hello! I'm a graduating Information Technology student at Davao del Norte State College, driven by a curiosity to explore emerging technologies, continuously learn, and create impactful solutions.</p>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        
+        <section id="education">
+            <h2>Educational Background</h2>
+            <div class="card">
+                <div class="edu-timeline">
+                    
+                    <div class="edu-item">
+                        <div class="edu-header">
+                            <h3>Bachelor of Science in Information Technology</h3>
+                            <span class="year-badge">2022 — 2026</span>
+                        </div>
+                        <p class="school-name">Davao del Norte State College</p>
+                        <div class="tags">
+                            <span>Python</span> 
+                            <span>Django</span>
+                            <span>Laravel</span> 
+                            <span>HTML/CSS</span> 
+                            <span>Machine Learning</span> 
+                            <span>Hardware Repair</span> 
+                        </div>
+                    </div>
+
+                    <div class="edu-item">
+                        <div class="edu-header">
+                            <h3>ICT: Animation and Programming</h3>
+                            <span class="year-badge">2020 — 2022</span>
+                        </div>
+                        <p class="school-name">Northlink Technological College (SHS)</p>
+                    </div>
+
+                    <div class="edu-item">
+                        <div class="edu-header">
+                            <h3>Information & Communications Technology</h3>
+                            <span class="year-badge">2016 — 2020</span>
+                        </div>
+                        <p class="school-name">Bernardino B. Bosque National High School (JHS)</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects I Completed</h2>
+            
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/600x400.png?text=SchoolPulse+Dashboard" alt="SchoolPulse System Thumbnail" class="project-img">
+                    <div class="project-content">
+                        <h3>SchoolPulse</h3>
+                        <p>A comprehensive academic management system designed for elementary schools (Grades 1-6). It streamlines faculty management, admissions, and student tracking through a centralized, live database architecture.</p>
+                        
+                        <div class="project-footer">
+                            <div class="tags">
+                                <span>Laravel</span> <span>PHP</span> <span>HTML/CSS</span>
+                            </div>
+                            <a href="#" class="repo-link" target="_blank">Visit Repository ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/600x400.png?text=Inventory+System+Dashboard" alt="Holy Child Inventory System Thumbnail" class="project-img">
+                    <div class="project-content">
+                        <h3>Holy Child College Inventory Management System</h3>
+                        <p>A local inventory and asset tracking system built specifically for Holy Child College of Davao del Norte. Designed to streamline resource management and equipment monitoring across the institution.</p>
+                        
+                        <div class="project-footer">
+                            <div class="tags">
+                                <span>Python</span> <span>Django</span> <span>HTML/CSS</span>
+                            </div>
+                            <a href="#" class="repo-link" target="_blank">Visit Repository ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <div class="card">
+                <p style="text-align: center;">Interested in collaborating on a new system or need hardware support? Send me a direct message below.</p>
+                
+                <!-- The data-netlify="true" attribute is what makes it work on Netlify -->
+                <form class="contact-form" name="portfolio-contact" method="POST" data-netlify="true">
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your Name">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="How can we work together?"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="contact-btn btn-primary" style="flex: 1; border: none; cursor: pointer; font-family: inherit;">Send Message</button>
+                        <a href="https://github.com/KCY7" target="_blank" class="contact-btn btn-outline" style="flex: 1; box-sizing: border-box;">GitHub Profile</a>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kim Cyril M. Torregoza. All rights reserved.</p>
+    </footer>
+</body>
+</html>
