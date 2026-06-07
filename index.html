@@ -157,6 +157,21 @@
             line-height: 1.7;
             text-align: justify; 
         }
+        .location-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem; 
+        }
+
+        .location-tag svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent); /* This makes the icon match your theme's blue */
+        }
 
         /* Main Content Adjustments */
         section { margin: 6rem auto; scroll-margin-top: 100px; }
@@ -212,14 +227,16 @@
             transform: translateY(-5px);
         }
 
-        .project-img {
+       .project-img {
             width: 100%;
             height: 240px;
-            object-fit: cover;
+            object-fit: cover; /* Fills the box edge-to-edge */
+            object-position: top center; /* Keeps the top header/menu perfectly visible */
             display: block;
             border-bottom: 1px solid var(--border-color);
             background-color: var(--border-color);
             transition: transform 0.5s ease;
+            /* Removed the padding so it sits flush against the edges again */
         }
 
         .project-card:hover .project-img {
@@ -479,6 +496,47 @@
         @media (max-width: 850px) {
             .form-actions { flex-direction: column; }
         }
+
+        /* Specific styling for Certificates */
+        .cert-title {
+            color: var(--text-main);
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 1.2rem;
+            margin: 0;
+            text-align: center;
+            background: var(--bg-card);
+            
+            /* GRID FIX: Forces every title area to be the exact same height, 
+               even if the text is 1 line or 2 lines. This stops the uneven stretching! */
+            min-height: 90px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .cert-img {
+            width: 100%;
+            
+            /* SIZE FIX: Increased from 260px to 380px. 
+               This raises the "roof", allowing 'contain' to scale your pictures up 
+               until they fill the entire width of the card! */
+            height: 380px; 
+            
+            object-fit: contain; 
+            display: block;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-main); 
+            padding: 1rem; 
+            transition: transform 0.5s ease;
+            box-sizing: border-box;
+            border-radius: 0 0 20px 20px; 
+        }
+
+        .project-card:hover .cert-img {
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
@@ -494,11 +552,17 @@
     <header class="hero-section" id="about">
         <div class="hero-card">
             <div class="image-wrapper">
-                <img src="https://via.placeholder.com/320x320.png?text=Profile+Image" alt="Profile" class="profile-img">
+                <img src="image/kim.jpg" alt="Profile" class="profile-img">
             </div>
-            
+                
             <div class="hero-content">
                 <h1>Kim Cyril M. Torregoza</h1>
+
+                <div class="location-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Brgy. San Nicolas Panabo City, Davao del Norte, Philippines
+                </div>
+
                 <p>Hello! I'm a graduating Information Technology student at Davao del Norte State College, driven by a curiosity to explore emerging technologies, continuously learn, and create impactful solutions.</p>
             </div>
         </div>
@@ -522,8 +586,6 @@
                             <span>Django</span>
                             <span>Laravel</span> 
                             <span>HTML/CSS</span> 
-                            <span>Machine Learning</span> 
-                            <span>Hardware Repair</span> 
                         </div>
                     </div>
 
@@ -553,7 +615,7 @@
             <div class="projects-grid">
                 
                 <div class="project-card">
-                    <img src="https://via.placeholder.com/600x400.png?text=SchoolPulse+Dashboard" alt="SchoolPulse System Thumbnail" class="project-img">
+                    <img src="image/school.png" alt="SchoolPulse System Thumbnail" class="project-img">
                     <div class="project-content">
                         <h3>SchoolPulse</h3>
                         <p>A comprehensive academic management system designed for elementary schools (Grades 1-6). It streamlines faculty management, admissions, and student tracking through a centralized, live database architecture.</p>
@@ -568,7 +630,7 @@
                 </div>
 
                 <div class="project-card">
-                    <img src="https://via.placeholder.com/600x400.png?text=Inventory+System+Dashboard" alt="Holy Child Inventory System Thumbnail" class="project-img">
+                    <img src="image/holychild.png" alt="Holy Child Inventory System Thumbnail" class="project-img">
                     <div class="project-content">
                         <h3>Holy Child College Inventory Management System</h3>
                         <p>A local inventory and asset tracking system built specifically for Holy Child College of Davao del Norte. Designed to streamline resource management and equipment monitoring across the institution.</p>
@@ -577,9 +639,41 @@
                             <div class="tags">
                                 <span>Python</span> <span>Django</span> <span>HTML/CSS</span>
                             </div>
-                            <a href="#" class="repo-link" target="_blank">Visit Repository ↗</a>
+                            <a href="https://github.com/KCY7/local-Inventory-management-system" class="repo-link" target="_blank">Visit Repository ↗</a>
                         </div>
                     </div>
+                </div>
+
+            </div>
+        </section>
+
+       <section id="certificates">
+            <h2>Certificates & Achievements</h2>
+            
+            <div class="projects-grid">
+                
+                <!-- Certificate Card 1 -->
+                <div class="project-card">
+                    <h3 class="cert-title">Excellence in Java Programming</h3>
+                    <img src="image/senior_high.jpg" alt="Excellence in Java Programming" class="cert-img">
+                </div>
+
+                <!-- Certificate Card 3-->
+                <div class="project-card">
+                    <h3 class="cert-title">Tech Exhibit Participation</h3>
+                    <img src="image/capstone_group.jpg" alt="Tech Exhibit Participation" class="cert-img">
+                </div>
+
+                <!-- Certificate Card 3-->
+                <div class="project-card">
+                    <h3 class="cert-title">Technology Exhibition: SchoolPulse</h3>
+                    <img src="image/schoolpulse_cert.png" alt="Technology Exhibition: SchoolPulse" class="cert-img">
+                </div>
+
+                 <!-- Certificate Card 2 -->
+                <div class="project-card">
+                    <h3 class="cert-title">Invertory Management System Certification</h3>
+                    <img src="image/inventory_cert.jpg" alt="Invertory Management System Certification" class="cert-img">
                 </div>
 
             </div>
